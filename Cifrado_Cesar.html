@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cifrado César</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f4f4f9;
+            color: #333;
+            text-align: center;
+        }
+        h1 {
+            font-size: 2em;
+        }
+        .input-container {
+            margin-top: 20px;
+        }
+        input[type="text"] {
+            padding: 8px;
+            font-size: 1em;
+            margin-top: 10px;
+        }
+        button {
+            padding: 10px 15px;
+            font-size: 1em;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+        .output {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-top: 20px;
+            color: #4CAF50;
+        }
+        .error {
+            color: red;
+            font-size: 1em;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Cifrado César</h1>
+    <p>Ingresa una palabra para cifrar usando el cifrado César (solo letras, sin caracteres especiales).</p>
+
+    <div class="input-container">
+        <input type="text" id="inputWord" placeholder="Ingresa la palabra" />
+        <button onclick="cifrarCesar()">Cifrar</button>
+    </div>
+
+    <div id="output" class="output"></div>
+    <div id="error" class="error"></div>
+
+    <script>
+        function cifrarCesar() {
+            const inputWord = document.getElementById('inputWord').value;
+            const errorDiv = document.getElementById('error');
+            const outputDiv = document.getElementById('output');
+            errorDiv.textContent = '';
+            outputDiv.textContent = '';
+
+            const palabraValida = /^[A-Za-z]+$/.test(inputWord);
+            if (!palabraValida) {
+                errorDiv.textContent = 'Por favor, ingresa solo letras sin caracteres especiales.';
+                return;
+            }
+
+            const desplazamiento = 3;
+            const palabraCifrada = cifrar(inputWord, desplazamiento);
+
+            outputDiv.textContent = `Palabra cifrada: ${palabraCifrada}`;
+        }
+
+        function cifrar(texto, desplazamiento) {
+            let resultado = '';
+
+            for (let i = 0; i < texto.length; i++) {
+                let char = texto[i];
+
+                if (char >= 'A' && char <= 'Z') {
+                    resultado += String.fromCharCode(((char.charCodeAt(0) - 65 + desplazamiento) % 26) + 65);
+                }
+                else if (char >= 'a' && char <= 'z') {
+                    resultado += String.fromCharCode(((char.charCodeAt(0) - 97 + desplazamiento) % 26) + 97);
+                }
+            }
+
+            return resultado;
+        }
+    </script>
+
+</body>
+</html>
